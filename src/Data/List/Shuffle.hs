@@ -21,7 +21,7 @@ module Data.List.Shuffle (
   -- ** List manipulation
   halve,
   -- ** Shuffling
-  interleave, shuffleLength
+  riffle, shuffleLength
 ) where
 
 import Control.Monad.Random
@@ -48,13 +48,13 @@ halve (z:zs) = let (xs,ys) = halve zs
 -- lists, uniformly at random.  An interleaving of two lists contains all the
 -- elements from both lists, where each list’s elements are kept in order.
 --
--- >>> interleave [1,2,3,4,5] 5 [60,70,80,90] 4
+-- >>> riffle [1,2,3,4,5] 5 [60,70,80,90] 4
 -- [1,60,70,80,2,3,90,4,5]
--- >>> interleave [1,2,3,4,5] 5 [60,70,80,90] 4
+-- >>> riffle [1,2,3,4,5] 5 [60,70,80,90] 4
 -- [60,70,80,1,2,3,4,90,5]
--- >>> interleave [1,2,3,4,5] 5 [60,70,80,90] 4
+-- >>> riffle [1,2,3,4,5] 5 [60,70,80,90] 4
 -- [1,60,70,80,2,3,4,90,5]
--- >>> interleave [1,2,3,4,5] 5 [60,70,80,90] 4
+-- >>> riffle [1,2,3,4,5] 5 [60,70,80,90] 4
 -- [60,1,2,70,3,80,4,5,90]
 --
 -- If the lengths are wrong, the function will sample from the wrong
@@ -62,14 +62,14 @@ halve (z:zs) = let (xs,ys) = halve zs
 --
 -- This function is part of
 -- <https://apfelmus.nfshost.com/articles/random-permutations.html Heinrich Apfelmus’s “merge shuffle” algorithm>.
-interleave :: MonadRandom m => [a] -> Int -> [a] -> Int -> m [a]
-interleave xs     !_  []     !_  = pure xs
-interleave []     !_  ys     !_  = pure ys
-interleave (x:xs) !nx (y:ys) !ny = do
+riffle :: MonadRandom m => [a] -> Int -> [a] -> Int -> m [a]
+riffle xs     !_  []     !_  = pure xs
+riffle []     !_  ys     !_  = pure ys
+riffle (x:xs) !nx (y:ys) !ny = do
   k <- getRandomR (1, nx+ny)
   if k <= nx
-  then (x:) <$> interleave xs     (nx-1) (y:ys) ny
-  else (y:) <$> interleave (x:xs) nx     ys     (ny-1)
+  then (x:) <$> riffle xs     (nx-1) (y:ys) ny
+  else (y:) <$> riffle (x:xs) nx     ys     (ny-1)
 
 -- |Shuffle a list and compute its length.  Produces a permutation of the input uniformly at random.
 --
@@ -88,7 +88,7 @@ shuffleLength xs  = do
   let (half1, half2) = halve xs
   (shuffled1, !length1) <- shuffleLength half1
   (shuffled2, !length2) <- shuffleLength half2
-  shuffled              <- interleave shuffled1 length1 shuffled2 length2
+  shuffled              <- riffle shuffled1 length1 shuffled2 length2
   pure (shuffled, length1+length2)
 
 -- |Shuffle a list.  Produces a permutation of the input uniformly at random.
