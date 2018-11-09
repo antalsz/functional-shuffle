@@ -1,0 +1,42 @@
+name:           functional-shuffle
+version:        0.1.0.0
+synopsis:       Functional list shuffling with Heinrich Apfelmus's "merge shuffle" algorithm
+description:    This package implements Heinrich Apfelmus's "merge shuffle" algorithm from his blog
+                post "Random Permutations and Sorting"
+                <https://apfelmus.nfshost.com/articles/random-permutations.html> (Feb 14, 2009).
+homepage:       https://github.com/antalsz/functional-shuffle#readme
+
+author:         Antal Spector-Zabusky
+maintainer:     Antal Spector-Zabusky <antal.b.sz@gmail.com>
+copyright:      Copyright © 2018 Antal Spector-Zabusky
+bug-reports:    https://github.com/antalsz/functional-shuffle/issues
+
+license:        BSD3
+license-file:   LICENSE
+
+category:       Data
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+  README.md
+  ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/antalsz/functional-shuffle
+
+library
+  exposed-modules:     Data.List.Shuffle
+  
+  other-extensions:    BangPatterns
+  
+  build-depends:       base        >= 4.8 && < 5
+                     , MonadRandom           < 1
+  -- We support base since the AMP and literally any version of MonadRandom.  We
+  -- have some /very/ loose upper bounds in case the interface of either changes
+  -- dramatically.
+
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall -fno-warn-name-shadowing -O2
