@@ -1,5 +1,5 @@
 name:           functional-shuffle
-version:        0.1.0.0
+version:        0.1
 synopsis:       Functional list shuffling with Heinrich Apfelmus’s “merge shuffle” algorithm
 description:    This package implements Heinrich Apfelmus’s “merge shuffle” algorithm from his blog
                 post
