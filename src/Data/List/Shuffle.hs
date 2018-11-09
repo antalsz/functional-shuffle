@@ -105,3 +105,4 @@ bridge xs  = do
 -- [8,1,2,7,9,4,5,3,6,0]
 shuffle :: MonadRandom m => [a] -> m [a]
 shuffle = fmap fst . bridge
+{-# INLINE shuffle #-}
