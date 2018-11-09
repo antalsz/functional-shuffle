@@ -1,9 +1,10 @@
 name:           functional-shuffle
 version:        0.1.0.0
-synopsis:       Functional list shuffling with Heinrich Apfelmus's "merge shuffle" algorithm
-description:    This package implements Heinrich Apfelmus's "merge shuffle" algorithm from his blog
-                post "Random Permutations and Sorting"
-                <https://apfelmus.nfshost.com/articles/random-permutations.html> (Feb 14, 2009).
+synopsis:       Functional list shuffling with Heinrich Apfelmus’s “merge shuffle” algorithm
+description:    This package implements Heinrich Apfelmus’s “merge shuffle” algorithm from his blog
+                post
+                <https://apfelmus.nfshost.com/articles/random-permutations.html “Random Permutations and Sorting”>
+                (Feb 14, 2009).
 homepage:       https://github.com/antalsz/functional-shuffle#readme
 
 author:         Antal Spector-Zabusky
